@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Gasto extends Model
 {
@@ -13,6 +14,7 @@ class Gasto extends Model
         'data',
         'quantidade',
         'valor',
+        'user_id',
     ];
 
     // caso queira que 'data' seja tratada como objeto Date
@@ -20,4 +22,12 @@ class Gasto extends Model
         'data' => 'date',
         'valor' => 'decimal:2',
     ];
+
+    /**
+     * Um gasto pertence a um usuário.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

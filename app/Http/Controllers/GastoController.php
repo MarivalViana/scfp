@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\GastoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GastoController extends Controller
 {
@@ -21,6 +22,7 @@ class GastoController extends Controller
 
     public function store(Request $request)
     {
+
         $dados = $request->validate([
             'descricao' => 'required|string|max:500',
             'data' => 'required|date',
@@ -28,7 +30,14 @@ class GastoController extends Controller
             'valor' => 'required|numeric|min:0',
         ]);
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Add the user_id to the validated data
+        $dados['user_id'] = $userId;
+
         try {
+            // Pass the updated data array to the service
             $gasto = $this->service->salvar($dados);
             return response()->json($gasto, 201);
         } catch (\InvalidArgumentException $e) {

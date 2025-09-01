@@ -31,10 +31,13 @@ class GastoControllerTest extends TestCase
                  ->assertJson([
                      'descricao' => 'Compra de computador',
                      'quantidade' => 1,
+                     'user_id' => $user->id, // Verifique se o user_id está correto
                  ]);
 
         $this->assertDatabaseHas('gastos', [
             'descricao' => 'Compra de computador',
+            'quantidade' => 1,
+            'user_id' => $user->id, // Verifique se o user_id está correto
         ]);
     }
 }

@@ -46,4 +46,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Um usuário pode ter muitos gastos.
+     */
+    public function gastos(): HasMany
+    {
+        return $this->hasMany(Gasto::class);
+    }
 }
