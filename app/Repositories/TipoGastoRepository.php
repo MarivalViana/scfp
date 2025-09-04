@@ -2,32 +2,32 @@
 
 namespace App\Repositories;
 
-use App\Models\Gasto;
+use App\Models\TipoGasto;
 
-class GastoRepository
+class TipoGastoRepository
 {
     public function all()
     {
-        return Gasto::all();
+        return TipoGasto::all();
     }
 
     public function find($id)
     {
-        return Gasto::findOrFail($id);
+        return TipoGasto::findOrFail($id);
     }
 
     public function create(array $data)
     {
-        return Gasto::create($data);
+        return TipoGasto::create($data);
     }
 
-    public function update(Gasto $model, array $data)
+    public function update(TipoGasto $model, array $data)
     {
         $model->update($data);
         return $model;
     }
 
-    public function delete(Gasto $model)
+    public function delete(TipoGasto $model)
     {
         return $model->delete();
     }

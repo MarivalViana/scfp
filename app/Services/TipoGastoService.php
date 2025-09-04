@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\GastoRepository;
+use App\Repositories\TipoGastoRepository;
 
-class GastoService
+class TipoGastoService
 {
     protected $repository;
 
-    public function __construct(GastoRepository $repository)
+    public function __construct(TipoGastoRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -25,19 +25,11 @@ class GastoService
 
     public function salvar(array $dados)
     {
-        if ($dados['valor'] < 0) {
-            throw new \InvalidArgumentException("O valor não pode ser negativo");
-        }
         return $this->repository->create($dados);
     }
 
     public function atualizar($id, array $dados)
     {
-        // Regra de negócio: garantir que valor não seja negativo na atualização também
-        if (isset($dados['valor']) && $dados['valor'] < 0) {
-            throw new \InvalidArgumentException("O valor não pode ser negativo");
-        }
-
         $model = $this->repository->find($id);
         return $this->repository->update($model, $dados);
     }

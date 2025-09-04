@@ -32,6 +32,7 @@ class GastoController extends Controller
             'repeticao' => 'required|boolean',
             'valor_dividido' => 'required|boolean',
             'anual' => 'required|boolean',
+            'tipo_gasto_id' => 'required|exists:tipos_gastos,id',
         ]);
 
         // // Get the authenticated user's ID

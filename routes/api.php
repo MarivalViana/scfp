@@ -2,6 +2,7 @@
 
 // routes/api.php
 use App\Http\Controllers\GastoController;
+use App\Http\Controllers\TipoGastoController;
 use App\Http\Controllers\AuthController; // Importe o AuthController
 use Illuminate\Support\Facades\Route;
 
@@ -11,5 +12,6 @@ Route::post('/login', [AuthController::class, 'login']);
 // Grupo de rotas protegidas pelo Sanctum
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('gastos', GastoController::class);
+    Route::apiResource('gasto', GastoController::class);
+    Route::apiResource('tipo-gasto', TipoGastoController::class);
 });
