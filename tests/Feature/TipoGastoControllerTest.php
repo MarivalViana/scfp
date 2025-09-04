@@ -91,7 +91,7 @@ class TipoGastoControllerTest extends TestCase
             ]);
     }
 
-    public function test_atualizar_gasto_proprio()
+    public function test_atualizar_tipo_gasto_proprio()
     {
         $gasto = TipoGasto::factory()->create();
 
@@ -112,7 +112,7 @@ class TipoGastoControllerTest extends TestCase
         ]);
     }
 
-    public function test_deletar_gasto_proprio()
+    public function test_deletar_tipo_gasto_proprio()
     {
         $gasto = TipoGasto::factory()->create();
 
