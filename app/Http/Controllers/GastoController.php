@@ -35,12 +35,6 @@ class GastoController extends Controller
             'tipo_gasto_id' => 'required|exists:tipos_gastos,id',
         ]);
 
-        // // Get the authenticated user's ID
-        // $userId = Auth::id();
-
-        // // Add the user_id to the validated data
-        // $dados['user_id'] = $userId;
-
         try {
             // Pass the updated data array to the service
             $gasto = $this->service->salvar($dados);
@@ -90,6 +84,8 @@ class GastoController extends Controller
             return response()->json(null, 204); // Status 204 No Content para deleção bem-sucedida
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json(['error' => 'Gasto não encontrado.'], 404);
+        }catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'Gasto Já está em uso.'], 404);
         }
     }
 }

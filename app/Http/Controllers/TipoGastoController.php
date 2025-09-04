@@ -71,6 +71,8 @@ class TipoGastoController extends Controller
             return response()->json(null, 204); // Status 204 No Content para deleção bem-sucedida
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json(['error' => 'Tipo Gasto não encontrado.'], 404);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'Tipo Gasto Já está em uso.'], 404);
         }
     }
 }
