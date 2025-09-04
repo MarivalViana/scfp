@@ -19,12 +19,17 @@ class GastoControllerTest extends TestCase
         // 2. Simular a autenticação do usuário para esta requisição
         // O segundo argumento 'sanctum' é a guarda de autenticação
         $response = $this->actingAs($user, 'sanctum')
-                         ->postJson('/api/gastos', [
+                          ->postJson('/api/gastos', [
                              'descricao' => 'Compra de computador',
                              'data' => '2025-08-29',
                              'quantidade' => 1,
                              'valor' => 3500.00,
+                             'compartilhado' => false,
+                             'repeticao' => false,
+                             'valor_dividido' => false,
+                             'anual' => false,
                          ]);
+
 
         // 3. Fazer as asserções
         $response->assertStatus(201) // Created

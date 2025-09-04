@@ -22,14 +22,23 @@ class GastoDatabaseTest extends TestCase
             'data' => '2025-08-29',
             'quantidade' => 2,
             'valor' => 700.00,
-            'user_id' => $user->id, // Adicione o user_id aqui
+            'user_id' => $user->id,
+            'compartilhado' => false,
+            'valor_dividido' => false,
+            'anual'=> false,
+            'repeticao' => false,
         ]);
 
         // 3. Verifique se os dados estão no banco
         $this->assertDatabaseHas('gastos', [
             'descricao' => 'Compra de cadeira',
             'quantidade' => 2,
-            'user_id' => $user->id, // É bom incluir o user_id na asserção também
+            'user_id' => $user->id,
+            'compartilhado' => false,
+            'valor_dividido' => false,
+            'anual'=> false,
+            'repeticao' => false,
+
         ]);
     }
 }

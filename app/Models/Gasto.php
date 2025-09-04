@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Gasto extends Model
 {
-    protected $table = 'gastos'; // tabela no banco
+    protected $table = 'gastos';
 
     protected $fillable = [
         'descricao',
@@ -15,17 +15,21 @@ class Gasto extends Model
         'quantidade',
         'valor',
         'user_id',
+        'compartilhado',
+        'repeticao',
+        'valor_dividido',
+        'anual',
     ];
 
-    // caso queira que 'data' seja tratada como objeto Date
     protected $casts = [
         'data' => 'date',
         'valor' => 'decimal:2',
+        'compartilhado' => 'boolean',
+        'repeticao' => 'boolean',
+        'valor_dividido' => 'boolean',
+        'anual' => 'boolean',
     ];
 
-    /**
-     * Um gasto pertence a um usuário.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

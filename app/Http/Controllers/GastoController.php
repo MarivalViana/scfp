@@ -28,13 +28,17 @@ class GastoController extends Controller
             'data' => 'required|date',
             'quantidade' => 'required|integer|min:1',
             'valor' => 'required|numeric|min:0',
+            'compartilhado' => 'required|boolean',
+            'repeticao' => 'required|boolean',
+            'valor_dividido' => 'required|boolean',
+            'anual' => 'required|boolean',
         ]);
 
-        // Get the authenticated user's ID
-        $userId = Auth::id();
+        // // Get the authenticated user's ID
+        // $userId = Auth::id();
 
-        // Add the user_id to the validated data
-        $dados['user_id'] = $userId;
+        // // Add the user_id to the validated data
+        // $dados['user_id'] = $userId;
 
         try {
             // Pass the updated data array to the service
@@ -58,10 +62,14 @@ class GastoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->validate([
-            'descricao' => 'string|max:500',
-            'data' => 'date',
-            'quantidade' => 'integer|min:1',
-            'valor' => 'numeric|min:0',
+            'descricao' => 'required|string|max:500',
+            'data' => 'required|date',
+            'quantidade' => 'required|integer|min:1',
+            'valor' => 'required|numeric|min:0',
+            'compartilhado' => 'required|boolean',
+            'repeticao' => 'required|boolean',
+            'valor_dividido' => 'required|boolean',
+            'anual' => 'required|boolean',
         ]);
 
         try {
