@@ -33,6 +33,7 @@ class GastoController extends Controller
             'valor_dividido' => 'required|boolean',
             'anual' => 'required|boolean',
             'tipo_gasto_id' => 'required|exists:tipos_gastos,id',
+            'classificacao_gasto_id' => 'required|exists:classificacoes_gastos,id',
         ]);
 
         try {
@@ -65,6 +66,8 @@ class GastoController extends Controller
             'repeticao' => 'required|boolean',
             'valor_dividido' => 'required|boolean',
             'anual' => 'required|boolean',
+            'tipo_gasto_id' => 'required|exists:tipos_gastos,id',
+            'classificacao_gasto_id' => 'required|exists:classificacoes_gastos,id',
         ]);
 
         try {

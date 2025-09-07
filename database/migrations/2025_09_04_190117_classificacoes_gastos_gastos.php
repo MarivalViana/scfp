@@ -13,8 +13,8 @@ return new class extends Migration
     {
         //adicionar uma coluna em gastos 'tipo_gasto_id' que referencia tipos_gastos ecriar a chave estrangeira
         Schema::table('gastos', function (Blueprint $table) {
-            $table->unsignedBigInteger(column: 'tipo_gasto_id')->after('id');
-            $table->foreign('tipo_gasto_id')->references('id')->on('tipos_gastos');
+            $table->unsignedBigInteger('classificacao_gasto_id')->after('id');
+            $table->foreign('classificacao_gasto_id')->references('id')->on('classificacoes_gastos');
         });
     }
 
@@ -24,8 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('gastos', function (Blueprint $table) {
-            $table->dropForeign(['tipo_gasto_id']);
-            $table->dropColumn('tipo_gasto_id');
+            $table->dropForeign(['classificacao_gasto_id']);
+            $table->dropColumn('classificacao_gasto_id');
         });
     }
 };

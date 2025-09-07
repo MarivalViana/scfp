@@ -19,6 +19,7 @@ class GastoFactory extends Factory
             'valor' => $this->faker->randomFloat(2, 10, 500),
             'user_id' => \App\Models\User::factory(), // Relacionamento com o usuário
             'tipo_gasto_id' => \App\Models\TipoGasto::factory(), // Novo relacionamento
+            'classificacao_gasto_id' => \App\Models\ClassificacaoGasto::factory(), // Novo relacionamento
             'compartilhado' => $this->faker->boolean(),
             'repeticao' => $this->faker->boolean(),
             'valor_dividido' => $this->faker->boolean(),

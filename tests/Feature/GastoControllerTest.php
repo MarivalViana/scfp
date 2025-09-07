@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Gasto;
 use App\Models\User;
 use App\Models\TipoGasto;
+use App\Models\ClassificacaoGasto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,6 +16,7 @@ class GastoControllerTest extends TestCase
     // Declare the properties here
     protected $user;
     protected $tipoGasto;
+    protected $classificacaoGasto;
 
     // Ações que devem ser executadas antes de cada teste
     protected function setUp(): void
@@ -23,10 +25,11 @@ class GastoControllerTest extends TestCase
         // Crie um usuário de teste e o tipo de gasto para usar em todos os testes
         $this->user = User::factory()->create();
         $this->tipoGasto = TipoGasto::factory()->create();
+        $this->classificacaoGasto = ClassificacaoGasto::factory()->create();
     }
 
     // Teste para a rota index
-    public function test_listar_gastos_do_usuario()
+    public function test_listar()
     {
         // Crie 3 gastos para o usuário de teste
         Gasto::factory(3)->create(['user_id' => $this->user->id]);
@@ -39,7 +42,7 @@ class GastoControllerTest extends TestCase
         $this->assertCount(3, $response->json());
     }
 
-    public function test_criar_gasto_via_api()
+    public function test_criar()
     {
         // 1. O código de criação do usuário e tipoGasto está correto.
         $user = User::factory()->create();
@@ -56,6 +59,7 @@ class GastoControllerTest extends TestCase
             'valor_dividido' => false,
             'anual' => false,
             'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id' => $this->classificacaoGasto->id,
         ];
 
         $response = $this->actingAs($user, 'sanctum')
@@ -68,6 +72,7 @@ class GastoControllerTest extends TestCase
                 'quantidade' => 1,
                 'valor' => '3500.00',
                 'tipo_gasto_id' => $tipoGasto->id,
+                'classificacao_gasto_id' => $this->classificacaoGasto->id,
                 'user_id' => $user->id,
             ]);
 
@@ -82,6 +87,7 @@ class GastoControllerTest extends TestCase
             'valor_dividido' => 0,
             'anual' => 0,
             'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id' => $this->classificacaoGasto->id,
             'user_id' => $user->id,
         ];
 
@@ -90,7 +96,7 @@ class GastoControllerTest extends TestCase
 
 
     // Testes de validação para a criação
-    public function test_nao_deve_criar_gasto_com_dados_invalidos()
+    public function test_nao_deve_criar_com_dados_invalidos()
     {
         $response = $this->actingAs($this->user, 'sanctum')
             ->postJson('/api/gasto', [
@@ -102,7 +108,7 @@ class GastoControllerTest extends TestCase
             ->assertJsonValidationErrors(['descricao', 'valor']);
     }
 
-    public function test_buscar_gasto_proprio()
+    public function test_buscar()
     {
         $gasto = Gasto::factory()->create([
             'user_id' => $this->user->id,
@@ -119,11 +125,12 @@ class GastoControllerTest extends TestCase
             ]);
     }
 
-    public function test_atualizar_gasto_proprio()
+    public function test_atualizar()
     {
         $gasto = Gasto::factory()->create([
             'user_id' => $this->user->id,
             'tipo_gasto_id' => $this->tipoGasto->id,
+            'classificacao_gasto_id' => $this->classificacaoGasto->id,
         ]);
 
         $dadosAtualizados = [
@@ -135,6 +142,8 @@ class GastoControllerTest extends TestCase
             'repeticao' => false,
             'valor_dividido' => true,
             'anual' => false,
+            'tipo_gasto_id' => $this->tipoGasto->id,
+            'classificacao_gasto_id' => $this->classificacaoGasto->id,
         ];
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -147,10 +156,13 @@ class GastoControllerTest extends TestCase
             'id' => $gasto->id,
             'descricao' => 'Gasto Atualizado',
             'valor' => 500.00,
+            'tipo_gasto_id' => $this->tipoGasto->id,
+            'classificacao_gasto_id' => $this->classificacaoGasto->id,
+            'user_id' => $this->user->id,
         ]);
     }
 
-    public function test_deletar_gasto_proprio()
+    public function test_deletar_gasto()
     {
         $gasto = Gasto::factory()->create([
             'user_id' => $this->user->id,

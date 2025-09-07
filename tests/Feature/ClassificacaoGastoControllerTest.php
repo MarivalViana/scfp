@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Models\TipoGasto;
+use App\Models\ClassificacaoGasto;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TipoGastoControllerTest extends TestCase
+class ClassificacaoGastoControllerTest extends TestCase
 {
     protected $user;
 
@@ -23,10 +23,10 @@ class TipoGastoControllerTest extends TestCase
     public function test_listar()
     {
         // Crie 3 gastos para o usuário de teste
-        TipoGasto::factory(3)->create();
+        ClassificacaoGasto::factory(3)->create();
 
         // Simule a autenticação e acesse a rota
-        $response = $this->actingAs($this->user, 'sanctum')->getJson('/api/tipo-gasto');
+        $response = $this->actingAs($this->user, 'sanctum')->getJson('/api/classificacao-gasto');
 
         // Verifique a resposta e a quantidade de itens
         $response->assertStatus(200);
@@ -45,7 +45,7 @@ class TipoGastoControllerTest extends TestCase
         ];
 
         $response = $this->actingAs($user, 'sanctum')
-            ->postJson('/api/tipo-gasto', $dados);
+            ->postJson('/api/classificacao-gasto', $dados);
 
         // 3. Verificações de asserção da resposta JSON estão corretas.
         $response->assertStatus(201)
@@ -60,7 +60,7 @@ class TipoGastoControllerTest extends TestCase
             'ativo' => 1,
         ];
 
-        $this->assertDatabaseHas('tipos_gastos', $dadosParaBD);
+        $this->assertDatabaseHas('classificacoes_gastos', $dadosParaBD);
     }
 
 
@@ -68,7 +68,7 @@ class TipoGastoControllerTest extends TestCase
     public function test_nao_deve_criar_com_dados_invalidos()
     {
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson('/api/tipo-gasto', [
+            ->postJson('/api/classificacao-gasto', [
                 'descricao' => '',
                 'ativo' => 'texto',
             ]);
@@ -79,10 +79,10 @@ class TipoGastoControllerTest extends TestCase
 
     public function test_buscar()
     {
-        $gasto = TipoGasto::factory()->create();
+        $gasto = ClassificacaoGasto::factory()->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->getJson("/api/tipo-gasto/{$gasto->id}");
+            ->getJson("/api/classificacao-gasto/{$gasto->id}");
 
         $response->assertStatus(200)
             ->assertJson([
@@ -93,7 +93,7 @@ class TipoGastoControllerTest extends TestCase
 
     public function test_atualizar()
     {
-        $gasto = TipoGasto::factory()->create();
+        $gasto = ClassificacaoGasto::factory()->create();
 
         $dadosAtualizados = [
             'descricao' => 'Fixo Atualizado',
@@ -101,12 +101,12 @@ class TipoGastoControllerTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->putJson("/api/tipo-gasto/{$gasto->id}", $dadosAtualizados);
+            ->putJson("/api/classificacao-gasto/{$gasto->id}", $dadosAtualizados);
 
         $response->assertStatus(200)
             ->assertJson(['descricao' => 'Fixo Atualizado']);
 
-        $this->assertDatabaseHas('tipos_gastos', [
+        $this->assertDatabaseHas('classificacoes_gastos', [
             'id' => $gasto->id,
             'descricao' => 'Fixo Atualizado'
         ]);
@@ -114,13 +114,13 @@ class TipoGastoControllerTest extends TestCase
 
     public function test_deletar()
     {
-        $gasto = TipoGasto::factory()->create();
+        $gasto = ClassificacaoGasto::factory()->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->deleteJson("/api/tipo-gasto/{$gasto->id}");
+            ->deleteJson("/api/classificacao-gasto/{$gasto->id}");
 
         $response->assertStatus(204); // No Content
 
-        $this->assertDatabaseMissing('gastos', ['id' => $gasto->id]);
+        $this->assertDatabaseMissing('classificacoes_gastos', ['id' => $gasto->id]);
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Gasto;
 use App\Models\User;
 use App\Models\TipoGasto;
+use App\Models\ClassificacaoGasto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,12 +15,11 @@ class GastoTest extends TestCase
 
     public function test_criacao_de_um_gasto()
     {
-        // 1. Crie um usuário e um tipo de gasto usando as factories
         $user = User::factory()->create();
-        $tipoGasto = TipoGasto::factory()->create([ // Use a factory aqui
-            'descricao' => 'Alimentação',
-            'ativo' => true,
-        ]);
+
+        $tipoGasto = TipoGasto::factory()->create();
+
+        $classificacaoGasto = ClassificacaoGasto::factory()->create();
 
         // 2. Crie um Gasto associado ao usuário e ao tipo de gasto
         $gasto = Gasto::create([
@@ -29,6 +29,7 @@ class GastoTest extends TestCase
             'valor' => 120.50,
             'user_id' => $user->id,
             'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id' => $classificacaoGasto->id,
         ]);
 
         // 3. Verifique se os dados foram salvos corretamente
@@ -37,11 +38,13 @@ class GastoTest extends TestCase
             'quantidade' => 10,
             'valor' => 120.50,
             'user_id' => $user->id,
-            'tipo_gasto_id' => $tipoGasto->id, // É bom incluir esta asserção
+            'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id'=> $classificacaoGasto->id,
         ]);
 
         // 4. Teste os relacionamentos
         $this->assertEquals($user->id, $gasto->user->id);
-        $this->assertEquals($tipoGasto->id, $gasto->tipoGasto->id); // Adicione o teste para a nova relação
+        $this->assertEquals($tipoGasto->id, $gasto->tipoGasto->id);
+        // $this->assertEquals($classificacaoGasto->id, $gasto->classificacaoGasto->id);
     }
 }

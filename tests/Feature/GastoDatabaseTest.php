@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Gasto;
 use App\Models\User;
+use App\Models\ClassificacaoGasto;
 use App\Models\TipoGasto; // Adicione esta importação
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -17,6 +18,7 @@ class GastoDatabaseTest extends TestCase
         // 1. Crie um usuário e um tipo de gasto para satisfazer a chave estrangeira
         $user = User::factory()->create();
         $tipoGasto = TipoGasto::factory()->create(); // Cria o tipo de gasto
+        $classificacaoGasto = ClassificacaoGasto::factory()->create(); // Cria a classificação de gasto
 
         // 2. Crie o gasto associando-o ao usuário e ao tipo de gasto
         $gasto = Gasto::create([
@@ -29,7 +31,8 @@ class GastoDatabaseTest extends TestCase
             'valor_dividido' => false,
             'anual' => false,
             'repeticao' => false,
-            'tipo_gasto_id' => $tipoGasto->id, // Adicione o novo campo
+            'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id' => $classificacaoGasto->id,
         ]);
 
         // 3. Verifique se os dados estão no banco
@@ -41,7 +44,8 @@ class GastoDatabaseTest extends TestCase
             'valor_dividido' => false,
             'anual' => false,
             'repeticao' => false,
-            'tipo_gasto_id' => $tipoGasto->id, // Verifique se o ID foi salvo
+            'tipo_gasto_id' => $tipoGasto->id,
+            'classificacao_gasto_id' => $classificacaoGasto->id,
         ]);
     }
 }

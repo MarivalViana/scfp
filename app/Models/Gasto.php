@@ -23,6 +23,7 @@ class Gasto extends Model
         'valor_dividido',
         'anual',
         'tipo_gasto_id',
+        'classificacao_gasto_id',
     ];
 
     protected $casts = [
@@ -43,5 +44,11 @@ class Gasto extends Model
     {
         return $this->belongsTo(TipoGasto::class, 'tipo_gasto_id');
     }
+
+    public function classficacaoGasto(): BelongsTo
+    {
+        return $this->belongsTo(ClassificacaoGasto::class, 'classificacao_gasto_id');
+    }
+
 
 }
